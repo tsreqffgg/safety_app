@@ -1,330 +1,162 @@
-import streamlit as st
-import pandas as pd
-import os
-from datetime import datetime
-
-# إعدادات الصفحة
-st.set_page_config(
-    page_title="SAFETY 360 | AI-Powered Safety Intelligence", 
-    page_icon="🛡️", 
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# تصميم واجهة الـ Glassmorphism والتفاعل المتوهج
-st.markdown("""
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety - نظام إدارة السلامة والطوارئ الذكي</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-    .stApp {
-        background: linear-gradient(135deg, #020617 0%, #090d16 50%, #0f172a 100%) !important;
-    }
-    section[data-testid="stSidebar"] {
-        background-color: rgba(11, 18, 33, 0.98) !important;
-        border-right: 1px solid rgba(255, 123, 0, 0.3);
-    }
-    section[data-testid="stSidebar"] * {
-        color: #ffffff !important;
-    }
-    .stTextInput input, .stTextArea textarea, .stSelectbox select {
-        background-color: #0b132b !important;
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        border-radius: 12px !important;
-        border: 2px solid #ff7b00 !important;
-        padding: 12px !important;
-        font-size: 16px !important;
-    }
-    h1, h2, h3, h4, h5, h6, p, span, label {
-        color: #f8fafc !important;
-    }
-    div.stAlert {
-        background: rgba(15, 23, 42, 0.9) !important;
-        color: #ffffff !important;
-        border: 1px solid #ff7b00 !important;
-        border-radius: 10px;
-    }
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
-""", unsafe_allow_html=True)
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-white">
 
-sheet_url = "https://docs.google.com/spreadsheets/d/1l6f8u-xkX9i89sTw9qfPkYO67WJ1Ym-XQCWLFpHICys/export?format=csv"
-
-@st.cache_data
-def load_data():
-    try:
-        df = pd.read_csv(sheet_url)
-        df.columns = df.columns.str.strip()
-        return df
-    except Exception as e:
-        return pd.DataFrame()
-
-df = load_data()
-current_date_str = datetime.now().strftime("%Y-%m-%d")
-
-# --- القائمة الجانبية المحدثة حسب الطبقات الـ 5 ---
-with st.sidebar:
-    if os.path.exists("logo.png"):
-        st.image("logo.png", use_container_width=True)
-    else:
-        st.markdown("### 🛡️ SAFETY 360")
-        st.caption("AI-Powered Safety Intelligence")
-        
-    st.markdown("---")
-    st.markdown("### 🧭 المنظومة الذكية")
-    
-    menu = st.radio(
-        "اختر المسار:",
-        [
-            "🏠 الرئيسية (ماذا تريد أن تفعل؟)",
-            "🧠 Safety Copilot (المساعد الذكي المتكامل)",
-            "⚖️ Knowledge & Conflicts (المعرفة وتعارض القوانين)",
-            "🛠️ Safety Workflow (دورة حياة المهمة)",
-            "🏢 Company Mode (إدارة المنشأة)",
-            "🛂 Safety Passport (جواز السلامة للعامل)",
-            "🖨️ QR Codes & Assets (الأصول والمعدات)",
-            "📊 Incident Intelligence & Dashboard"
-        ]
-    )
-    
-    st.markdown("---")
-    if not df.empty:
-        st.success("🟢 المنظومة: متصلة وفعالة")
-        st.metric(label="📊 المعايير المعتمدة", value=len(df))
-    else:
-        st.error("🔴 الخادم: غير متصل")
-        
-    st.markdown("---")
-    st.caption("Developed by T.S.S\nDisaster & Crisis Management")
-
-
-# ==========================================
-# 1. 🏠 الرئيسية (ماذا تريد أن تفعل؟)
-# ==========================================
-if menu == "🏠 الرئيسية (ماذا تريد أن تفعل؟)":
-    st.title("🌐 SAFETY 360 — AI-Powered Safety Intelligence")
-    st.markdown("##### منظومة القيادة والتحكم الذكية للسلامة والصحة المهنية وإدارة الأزمات")
-    st.write("")
-    
-    st.markdown("### 🎯 ماذا تريد أن تفعل اليوم؟")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    intent = ""
-    with col1:
-        if st.button("🔴 عندي حالة طوارئ فوريّة", use_container_width=True):
-            intent = "emergency"
-        if st.button("⚖️ أريد معرفة المتطلب القانوني", use_container_width=True):
-            intent = "law"
-        if st.button("🤖 أريد أن أسأل Safety Copilot", use_container_width=True):
-            intent = "copilot"
-    with col2:
-        if st.button("⚠️ أريد تقييم خطر (Risk Assessment)", use_container_width=True):
-            intent = "risk"
-        if st.button("🧪 أريد معلومات عن مادة كيميائية", use_container_width=True):
-            intent = "material"
-        if st.button("🛂 فحص جواز السفر (Safety Passport)", use_container_width=True):
-            intent = "passport"
-    with col3:
-        if st.button("📋 أريد إنشاء نموذج (JSA & Workflow)", use_container_width=True):
-            intent = "workflow"
-        if st.button("📸 أريد تحليل صورة خطر (AI Vision)", use_container_width=True):
-            intent = "vision"
-        if st.button("🏢 الانتقال لـ Company Mode", use_container_width=True):
-            intent = "company"
-
-    st.markdown("---")
-    
-    # توجيه المستخدم حسب اختياره السريع
-    if intent == "emergency":
-        st.error("🚨 الانتقال السريع للطوارئ:")
-        st.markdown("1. أطلق صفارة الإنذار فوراً.\n2. اتصل بالدفاع المدني (911).\n3. توجه لنقطة التجمع الآمنة.")
-    elif intent == "law" or intent == "":
-        q_search = st.text_input("🔍 بحث فوري في التشريعات والمعايير:", placeholder="مثلاً: أعمال البناء، السقالات، تسرب غاز...")
-        if q_search and not df.empty:
-            results = df[df.astype(str).apply(lambda x: x.str.contains(q_search, case=False, na=False)).any(axis=1)]
-            if not results.empty:
-                for idx, row in results.iterrows():
-                    with st.expander(f"📌 [{row.get('Category','')}] - {row.get('Legislation Title','')} ({row.get('Country','')})"):
-                        st.markdown(f"**🏛️ مستوى الإلزام:** `{row.get('Compliance Level','')}` | **🔍 مستوى الثقة:** 🟢 موثوق جدًا")
-                        st.markdown(f"**📅 آخر تحقق:** `{current_date_str}`")
-                        st.markdown(f"**📋 المتطلب:**\n> {row.get('Requirement','')}")
-            else:
-                st.warning("⚠️ لم يتم العثور على نتائج.")
-    elif intent == "copilot":
-        st.info("💡 يرجى الانتقال من القائمة الجانبية إلى (Safety Copilot) لتجربة المساعد الذكي التفاعلي المتكامل.")
-    elif intent == "risk":
-        st.info("💡 أداة تقييم المخاطر متاحة عبر مسار (Safety Workflow) في القائمة الجانبية.")
-    elif intent == "material":
-        st.info("🧪 قاعدة بيانات المواد: ابحث براسم المادة أو رقم CAS للحصول على صحيفة بيانات السلامة (SDS).")
-
-
-# ==========================================
-# 2. 🧠 Safety Copilot (المساعد الذكي المتكامل)
-# ==========================================
-elif menu == "🧠 Safety Copilot (المساعد الذكي المتكامل)":
-    st.title("🧠 Safety Copilot — المساعد الذكي التحليلي")
-    st.markdown("المساعد لا يجيب فقط، بل يفهم المهمة، يحلل المخاطر التفاعلية، ويستخرج الإجراءات والمصادر.")
-    
-    user_task = st.text_input("✍️ ما هي المهمة التي تود تنفيذها؟", placeholder="مثلاً: بدي أعمل أعمال لحام في موقع إنشائي...")
-    
-    if user_task:
-        st.markdown("### 💬 تفاعل Safety Copilot التلقائي معك:")
-        st.markdown("عشان نبني خطة سلامة دقيقة، يرجى تحديد التفاصيل التالية:")
-        
-        c1, c2 = st.columns(2)
-        with c1:
-            loc_type = st.selectbox("أين سيتم العمل؟", ["مفتوح / خارجي", "مكان مغلق (Confined Space)", "ارتفاع شاهق", "منطقة قابلة للاشتعال"])
-            has_chem = st.selectbox("هل توجد مواد قابلة للاشتعال أو كيميائية؟", ["نعم", "لا"])
-        with c2:
-            has_height = st.selectbox("هل يوجد عمل على ارتفاع؟", ["نعم", "لا"])
-            team_size = st.number_input("عدد العمال المشاركين:", min_value=1, value=3)
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-black tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Safety</span>
+            </div>
             
-        if st.button("🚀 بناء خطة السلامة الشاملة للمهمة"):
-            st.success("✨ تم بناء خطة السلامة التشغيلية بنجاح:")
-            st.markdown(f"""
-            * **📋 المهمة المحللة:** {user_task} (الموقع: {loc_type})
-            * **🟢 مستوى الثقة في التحليل:** `🟢 موثوق جدًا (مستند لمعايير OSHA وتشريعات العمل)`
-            * **📅 آخر تحديث للمصادر:** `{current_date_str}`
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#features" class="hover:text-cyan-400 transition">الميزات</a>
+                <a href="#ai-assistant" class="hover:text-cyan-400 transition">المساعد الذكي</a>
+                <a href="#tools" class="hover:text-cyan-400 transition">الأدوات الميدانية</a>
+                <a href="#contact" class="hover:text-cyan-400 transition">اتصل بنا</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden sm:inline-block text-sm font-semibold text-slate-300 hover:text-white px-4 py-2 transition">تسجيل الدخول</a>
+                <a href="#" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-cyan-500/20 transition transform hover:-translate-y-0.5">ابدأ الاستخدام</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-blue-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-cyan-500/20 text-cyan-400 text-xs font-semibold mb-6">
+                <i class="fa-solid fa-bolt text-xs"></i>
+                <span>الجيل القادم من أنظمة إدارة السلامة والطوارئ</span>
+            </div>
             
-            ---
-            ### 🛡️ خطوة الإجراءات والسيطرة:
-            1. **التصاريح اللازمة:** استخراج (Hot Work Permit) + (Confined Space Permit إذا لزم).
-            2. **معدات الوقاية الشخصية (PPE):** خوذة، نظارات لحام داكنة، قفازات جلدية، حذاء سلامة عازل.
-            3. **التحكم بالمخاطر:** توفر طفاية حريق بودرة جافة قريبة، وجود مراقب حريق (Fire Watcher) طوال فترة العمل.
-            4. **إجراءات الطوارئ:** جاهزية الاسعافات الأولية وخطط الإخلاء الفوري.
-            """)
-
-
-# ==========================================
-# 3. ⚖️ Knowledge & Conflicts (المعرفة وتعارض القوانين)
-# ==========================================
-elif menu == "⚖️ Knowledge & Conflicts (المعرفة وتعارض القوانين)":
-    st.title("⚖️ إدارة المعرفة وتعارض القوانين (Compliance & Conflicts)")
-    st.markdown("مقارنة ذكية بين التشريعات المحلية والمعايير الدولية وكشف التعارضات برمجياً.")
-    
-    topic = st.selectbox("اختر الموضوع للمقارنة والتحقق:", ["أعمال البناء والتشييد والعمل على ارتفاعات", "العمل داخل الأماكن المغلقة", "التعامل مع المواد الكيميائية الخطرة"])
-    
-    if topic:
-        st.markdown(f"### 🔍 تحليل التوافق والتعارض لـ: {topic}")
-        st.markdown("⚠️ **ملاحظة نظامية:** يوجد اختلاف طفيف بين المتطلبات المحلية الأردنية ومعايير OSHA الأمريكية من حيث الارتفاع الإلزامي لتأمين الحواف.")
-        
-        col_loc, col_int = st.columns(2)
-        with col_loc:
-            st.info("🇯🇴 المتطلب المحلي (الأنظمة الأردنية):")
-            st.markdown("- الالتزام بقانون العمل الأردني وتعليمات السلامة الصادرة عن وزارة العمل.\n- التركيز على الإشراف الميداني ولجان السلامة المؤسسية.")
-        with col_int:
-            st.info("🌎 المعيار الدولي (OSHA / ISO):")
-            st.markdown("- OSHA 1926: الالتزام بالحماية الإجبارية عند ارتفاع 1.8 متر (6 قدم) في قطاع البناء.\n- ISO 45001: إدارة المخاطر واستمرارية الأعمال.")
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight max-w-4xl mx-auto mb-8">
+                مستقبلك الميداني الآمن يبدأ من هنا: <span class="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">نظام ذكي للسلامة</span>
+            </h1>
             
-        st.markdown("---")
-        st.markdown("💡 **ماذا يعني ذلك عملياً؟**")
-        st.success("يُعتمد **المعيار الأكثر صرامة** (تطبيق معيار 1.8 متر الدولي داخل المنشأة لضمان أقصى درجات الحماية وتلبية المتطلب المحلي معاً).")
-        st.caption(f"📅 آخر تحقق وتحديث للمعلومة: {current_date_str} | مستوى الثقة: 🟢 موثوق جدًا")
+            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                منصة متكاملة تجمع التشريعات، أدوات تقييم المخاطر، والمساعد الذكي لدعم صناع القرار ومسؤولي السلامة في الميدان بكفاءة عالية.
+            </p>
 
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#" class="w-full sm:w-auto bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-cyan-500/25 transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <span>استكشف الأدوات الميدانية</span>
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </a>
+                <a href="#" class="w-full sm:w-auto glass-card hover:bg-white/10 text-white font-bold px-8 py-4 rounded-xl transition flex items-center justify-center gap-3 border border-slate-700">
+                    <i class="fa-solid fa-wand-magic-sparkles text-cyan-400"></i>
+                    <span>تجربة المساعد الذكي</span>
+                </a>
+            </div>
 
-# ==========================================
-# 4. 🛠️ Safety Workflow (دورة حياة المهمة)
-# ==========================================
-elif menu == "🛠️ Safety Workflow (دورة حياة المهمة)":
-    st.title("🛠️ Safety Workflow — دورة حياة المهمة المتكاملة")
-    st.markdown("مسار المشرف الذكي: من تقييم المخاطر (Risk Assessment) حتى إغلاق المهمة وسجل الحوادث.")
-    
-    step = st.radio("اختر المرحلة الحالية في المهمة:", ["1. Risk Assessment", "2. JSA (تحليل سلامة العمل)", "3. Permit to Work (التصاريح)", "4. Toolbox Talk (اجتماع الصندوق)", "5. Execution & Inspection", "6. Close & Incident Report"])
-    
-    if "1." in step:
-        st.subheader("📊 تقييم المخاطر (Risk Assessment)")
-        act = st.text_input("اسم النشاط التشغيلي:", "تفريغ خوادم كيميائية")
-        p = st.slider("الاحتمالية (1-5):", 1, 5, 3)
-        s = st.slider("الشدة (1-5):", 1, 5, 4)
-        score = p * s
-        st.metric("مستوى الخطورة الإجمالي (Risk Score)", score)
-        if score >= 15:
-            st.error("🚨 خطر مرتفع جداً! يتطلب اعتماد مدير السلامة فوراً.")
-    elif "2." in step:
-        st.subheader("📋 نموذج JSA (Job Safety Analysis)")
-        st.write("تسلسل خطوات العمل ➔ الخطر المرتبط ➔ إجراءات السيطرة المقترحة.")
-        st.text_area("أدخل خطوات العمل:", "1. فحص الصمام\n2. فتح المحبس تدريجياً\n3. المراقبة المستمرة")
-        st.success("✨ تم اعتماد نموذج JSA بنجاح وربطه بالملف الرقمي.")
-    else:
-        st.info(f"📍 المرحلة النشطة حالياً: {step} — النظام يتابع كافة المتطلبات التنظيمية والميدانية.")
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-20">
+                <div class="glass-card p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-3xl font-black text-cyan-400 mb-1">+99%</h3>
+                    <p class="text-sm text-slate-400">دقة عالية في تقييم المخاطر الميدانية</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-3xl font-black text-blue-400 mb-1">استجابة فورية</h3>
+                    <p class="text-sm text-slate-400">للأزمات وحالات الطوارئ المهنية</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-3xl font-black text-indigo-400 mb-1">مرجع معتمد</h3>
+                    <p class="text-sm text-slate-400">لأحدث التشريعات والمعايير الدولية</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-slate-900/50 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">مميزات مصممة خصيصاً للميدان</h2>
+                <p class="text-slate-400">كل ما تحتاجه لإدارة السلامة العامة والكوارث في منصة واحدة متطورة.</p>
+            </div>
 
-# ==========================================
-# 5. 🏢 Company Mode (إدارة المنشأة)
-# ==========================================
-elif menu == "🏢 Company Mode (إدارة المنشأة)":
-    st.title("🏢 Company Mode — نظام إدارة السلامة للمؤسسات")
-    st.markdown("مساحتك الخاصة لإدارة العمال، المواقع، المخاطر، وسجل الحوادث ومؤشر السلامة (Safety Score).")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Safety Score", "94 / 100", "🟢 ممتاز")
-    with col2:
-        st.metric("إجمالي العمال", "42 عامل", "نشطون")
-    with col3:
-        st.metric("المواقع المدارة", "3 مواقع", "عمان، العقبة، الزرقاء")
-    with col4:
-        st.metric("الحوادث المسجلة", "0 حادث", "سجل نظيف")
-        
-    st.markdown("---")
-    st.subheader("📋 إدارة الإجراءات التصحيحية والمستندات المؤسسية")
-    st.write("يمكنك رفع شهادات العمال، متابعة التفتيش الدوري، واستعراض تقارير الأداء الميداني بضغطة زر.")
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-card p-8 rounded-3xl hover:border-cyan-500/50 transition duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">المساعد الذكي</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">إجابات فورية واستشارات دقيقة للتعامل الفوري مع أي طارئ ميداني بناءً على البروتوكولات المعتمدة.</p>
+                </div>
 
+                <!-- Feature 2 -->
+                <div class="glass-card p-8 rounded-3xl hover:border-blue-500/50 transition duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">قوائم التدقيق</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">قوائم فحص رقمية جاهزة لعمليات التفتيش والمتابعة اليومية لضمان الامتثال لشروط السلامة العامة.</p>
+                </div>
 
-# ==========================================
-# 6. 🛂 Safety Passport (جواز السلامة للعامل)
-# ==========================================
-elif menu == "🛂 Safety Passport (جواز السلامة للعامل)":
-    st.title("🛂 Safety Passport — جواز السلامة الرقمي للعامل")
-    st.markdown("التحقق الفوري من صلاحية تدريبات العامل، شهاداته، والأعمال المسموح له بتنفيذها.")
-    
-    worker_id = st.text_input("أدخل رقم العامل أو امسح الباركود:", "TSS-2026-8849")
-    if worker_id:
-        st.success("🟢 تم العثور على ملف العامل: طارق السقرات (مشرف سلامة / إدارة أزمات)")
-        st.markdown("""
-        * **🪪 رقم الهوية المهنية:** TSS-2026-8849
-        * **🎓 الدورات والشهادات:** 
-          * دورة إدارة الأزمات والطوارئ (معتمد)
-          * رخصة القيادة الدولية للحاسوب (ICDL)
-          * دورة الإسعافات الأولية المتقدمة (ساري المفعول)
-        * **🛠️ الأعمال المسموح له بتنفيذها:** 
-          * ✅ الإشراف على مواقع الإنشاءات
-          * ✅ إدارة الطوارئ والإنقاذ الأولي
-          * ⚠️ **تحذير:** يتطلب تجديد رخصة العمل في الأماكن المغلقة قريباً.
-        """)
+                <!-- Feature 3 -->
+                <div class="glass-card p-8 rounded-3xl hover:border-indigo-500/50 transition duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">حاسبة المخاطر</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">أدوات حسابية متطورة لتقييم مستويات التهديد والخطورة وتحديد أولويات المعالجة والتدخل.</p>
+                </div>
 
+                <!-- Feature 4 -->
+                <div class="glass-card p-8 rounded-3xl hover:border-teal-500/50 transition duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">المكتبة الشاملة</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">أرشيف ضخم يضم القوانين، اللوائح التنفيذية، وإرشادات السلامة والصحة المهنية وإدارة الكوارث.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-# ==========================================
-# 7. 🖨️ QR Codes & Assets (الأصول والمعدات)
-# ==========================================
-elif menu == "🖨️ QR Codes & Assets (الأصول والمعدات)":
-    st.title("🖨️ نظام QR Codes لإدارة المعدات والمواد")
-    st.markdown("امسح أو اختر كود المعدة لعرض حالة الفحص الدوري وصلاحية التشغيل.")
-    
-    asset_sel = st.selectbox("اختر الأصول أو المعدة:", ["🧯 طفاية حريق #024", "🏗️ رافعة شوكية #09", "🧪 برميل مادة الهيدروجين #C-12"])
-    if asset_sel:
-        st.info(f"📌 سجل أصل المعدة: {asset_sel}")
-        st.markdown(f"""
-        * **آخر فحص دوري:** 15 أغسطس 2026
-        * **موعد الفحص القادم:** 15 نوفمبر 2026
-        * **الحالة التشغيلية:** 🟢 جاهزة للاستخدام وآمنة
-        * **المسؤول عن الصيانة:** فريق الهندسة والسلامة
-        """)
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-900 bg-slate-950 text-center text-slate-500 text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-white font-bold text-sm">S</div>
+                <span class="text-white font-bold text-lg">Safety Platform</span>
+            </div>
+            <p>جميع حقوق الطبع والنشر محفوظة © 2026</p>
+            <div class="flex gap-6 text-slate-400">
+                <a href="#" class="hover:text-cyan-400 transition"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="hover:text-cyan-400 transition"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="hover:text-cyan-400 transition"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
 
-
-# ==========================================
-# 8. 📊 Incident Intelligence & Dashboard
-# ==========================================
-elif menu == "📊 Incident Intelligence & Dashboard":
-    st.title("📊 Incident Intelligence & Analytics Dashboard")
-    st.markdown("تحليل ذكي للحوادث، اكتشاف الأنماط المتكررة، والجذور السببية لمنع تكرارها.")
-    
-    st.warning("⚠️ **تنبيه تحليل الذكاء الاصطناعي:** تم رصد تشابه في نمط 2 بلاغات سابقة تتعلق بعدم تأمين حواف العمل خلال الشهر الحالي. يُنصح بتكثيف التفتيش الميداني في القطاع الشرقي.")
-    
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.metric("مؤشر المخاطر التراكمي", "منخفض جداً", "-12% عن الشهر السابق")
-    with col_b:
-        st.metric("نسبة إغلاق الإجراءات التصحيحية", "100%", "مكتمل")
-        
-    st.markdown("---")
-    st.subheader("📈 سجل التحليل الجذري للحوادث (Root Cause Analysis)")
-    st.write("النظام يحلل: ماذا حدث؟ ➔ لماذا حدث؟ ➔ الإجراء التصحيحي الجذري لمنع تكراره نهائياً.")
+</body>
+</html>
