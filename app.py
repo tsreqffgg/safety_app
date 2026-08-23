@@ -8,8 +8,7 @@ st.title("🛡️ منصة خبراء السلامة الذكية (MVP)")
 st.write("مساعدك القانوني والفني المعتمد للسلامة والصحة المهنية (أردن ودولي)")
 
 # رابط جدول البيانات الخاص بك بصيغة التصدير المباشر
-https://docs.google.com/spreadsheets/d/1l6f8u-xkX9i89sTw9qfPkYO67WJ1Ym-XQCWLFpHICys/edit?usp=sharing
-
+sheet_url = "https://docs.google.com/spreadsheets/d/1l6f8u-xkX9i89sTw9qfPkYO67WJ1Ym-XQCWLFpHICys/export?format=csv"
 @st.cache_data
 def load_data():
     try:
