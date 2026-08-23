@@ -9,37 +9,49 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تخصيص التصميم بالهوية البصرية (الكحلي والبرتقالي)
+# تخصيص التصميم بالهوية البصرية (خلفية كحلي كاملة مع عناصر برتقالية وبيضاء)
 st.markdown("""
     <style>
-    /* لون الخلفية العامة وشريط القائمة الجانبية */
-    .main {
-        background-color: #f4f6f9;
+    /* خلفية الموقع باللون الكحلي الداكن الفخم */
+    .stApp {
+        background-color: #0b132b !important;
     }
+    
+    /* القائمة الجانبية */
     section[data-testid="stSidebar"] {
-        background-color: #0d1b2a;
+        background-color: #1c2541 !important;
     }
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
     
-    /* تنسيق خانة البحث بحدود برتقالية جذابة */
+    /* لون النصوص العامة باللون الأبيض لتباين واضح مع الكحلي */
+    h1, h2, h3, h4, h5, h6, p, span, label {
+        color: #ffffff !important;
+    }
+    
+    /* تنسيق خانة البحث بحدود برتقالية بارزة وخلفية كحلية */
     .stTextInput > div > div > input {
+        background-color: #1c2541 !important;
+        color: #ffffff !important;
         border-radius: 10px;
         border: 2px solid #ff7b00;
         padding: 10px;
     }
     
-    /* تنسيق العناوين الرئيسية باللون الكحلي العميق */
-    h1, h2, h3 {
-        color: #1b263b;
+    /* تنسيق مربعات النتائج (Expanders) لتتوافق مع الهوية الكحلي والبرتقالي */
+    .streamlit-expanderHeader {
+        background-color: #1c2541 !important;
+        color: #ffffff !important;
+        border-radius: 8px;
+        border: 1px solid #ff7b00 !important;
     }
     
-    /* تنسيق مربعات النتائج (Expanders) */
-    .streamlit-expanderHeader {
-        background-color: #ffffff;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
+    /* تنسيق الصناديق والتحذيرات */
+    div.stAlert {
+        background-color: #1c2541 !important;
+        color: #ffffff !important;
+        border: 1px solid #ff7b00 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -61,6 +73,7 @@ df = load_data()
 # --- القائمة الجانبية مع شعارك الرسمي TSS ---
 with st.sidebar:
     st.image("logo.png", use_container_width=True)
+    
     st.markdown("---")
     st.title("لوحة التحكم")
     st.info("💡 **عن المنصة:**\nمساعدك المعتمد للبحث الفوري في التشريعات الأردنية ومعايير السلامة الدولية (OSHA, ISO, NFPA).")
