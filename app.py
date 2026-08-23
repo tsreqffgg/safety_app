@@ -9,15 +9,23 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تخصيص تصميم بصري تكتيكي متطور جداً (Cyber-Glassmorphism)
+# تخصيص التصميم مع خلفية متحركة وكتابة بيضاء صافية في البحث
 st.markdown("""
     <style>
-    /* خلفية الفضاء السيبراني العميق مع تدرجات رادارية */
+    /* خلفية متحركة بتدرجات رادارية عميقة (Animated Cyber Background) */
     .stApp {
-        background: radial-gradient(circle at 50% 10%, #0d1b2a 0%, #050b14 70%, #020408 100%) !important;
+        background: linear-gradient(270deg, #050b14, #0b132b, #1c2541, #080f1d);
+        background-size: 800% 800%;
+        animation: gradientAnimation 20s ease infinite;
     }
     
-    /* القائمة الجانبية بنمط لوحة التحكم العسكرية */
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* القائمة الجانبية بتصميم تكتيكي */
     section[data-testid="stSidebar"] {
         background-color: #070d1a !important;
         border-right: 1px solid rgba(255, 123, 0, 0.3);
@@ -26,10 +34,11 @@ st.markdown("""
         color: #ffffff !important;
     }
     
-    /* تأثير التوهج البرتقالي السيبراني (Neon Pulse) */
+    /* خانة البحث: خلفية كحلية، حدود برتقالية، والكتابة باللون الأبيض النقي */
     .stTextInput > div > div > input {
         background-color: #0b132b !important;
-        color: #00ffff !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         border-radius: 12px;
         border: 2px solid #ff7b00;
         padding: 14px;
@@ -38,8 +47,8 @@ st.markdown("""
         transition: all 0.4s ease;
     }
     .stTextInput > div > div > input:focus {
-        border-color: #00ffff;
-        box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        border-color: #ff9f1c;
+        box-shadow: 0 0 20px rgba(255, 123, 0, 0.5);
     }
     
     /* حركة ظهور العناصر بشكل تكتيكي ناعم */
@@ -51,26 +60,26 @@ st.markdown("""
         animation: tacticalFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
-    /* تنسيق النصوص والعناوين بإضاءة خفيفة */
+    /* تنسيق النصوص والعناوين */
     h1, h2, h3, h4, h5, h6, p, span, label {
         color: #e2e8f0 !important;
     }
     
     /* صندوق النتائج بتصميم زجاجي عالي التقنية */
     .streamlit-expanderHeader {
-        background: rgba(17, 29, 50, 0.8) !important;
+        background: rgba(17, 29, 50, 0.85) !important;
         color: #ffffff !important;
         border-radius: 10px;
         border: 1px solid rgba(255, 123, 0, 0.4) !important;
         transition: all 0.3s ease;
     }
     .streamlit-expanderHeader:hover {
-        border-color: #00ffff !important;
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-        background: rgba(28, 37, 65, 0.9) !important;
+        border-color: #ff7b00 !important;
+        box-shadow: 0 0 15px rgba(255, 123, 0, 0.3);
+        background: rgba(28, 37, 65, 0.95) !important;
     }
     
-    /* تنبيهات النظام الأمني */
+    /* تنبيهات النظام */
     div.stAlert {
         background: rgba(11, 19, 43, 0.9) !important;
         color: #ffffff !important;
@@ -94,7 +103,7 @@ def load_data():
 
 df = load_data()
 
-# --- القائمة الجانبية المحدثة مع شعار TSS وتسمية SAFETY 360 ---
+# --- القائمة الجانبية لمنصة SAFETY 360 ---
 with st.sidebar:
     st.image("logo.png", use_container_width=True)
     st.markdown("---")
@@ -110,12 +119,12 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Designed & Developed by T.S.S\nDisaster & Crisis Management")
 
-# --- الواجهة الرئيسية بتصميم SAFETY 360 ---
+# --- الواجهة الرئيسيةSAFETY 360 ---
 st.title("🌐 SAFETY 360 — منصة السلامة وإدارة الأزمات الذكية")
 st.markdown("##### 🛡️ محطة القيادة والتحكم لاستعراض التشريعات وتحليل المخاطر (أردن ودولي)")
 st.write("")
 
-# نافذة البحث الرئيسية
+# نافذة البحث الرئيسية (مع كتابة بيضاء صافية)
 user_query = st.text_input("🔍 رادار البحث الفوري (ابحث عن أي تشريع، خطر، صيف، طوارئ، كيميائي، حفريات):", placeholder="أدخل مصطلح البحث هنا (مثلاً: ارتفاع، حريق، طوارئ، LOTO)...")
 
 if user_query:
