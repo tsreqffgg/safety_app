@@ -9,49 +9,56 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تخصيص التصميم مع خلفية متحركة وكتابة بيضاء صافية في البحث
+# تخصيص التصميم مع خلفية شبكية نيون متحركة حقيقية
 st.markdown("""
     <style>
-    /* خلفية متحركة بتدرجات رادارية عميقة (Animated Cyber Background) */
+    /* إخفاء خلفية Streamlit الأصلية وجعلها شفافة لإظهار الخلفية المتحركة */
     .stApp {
-        background: linear-gradient(270deg, #050b14, #0b132b, #1c2541, #080f1d);
-        background-size: 800% 800%;
-        animation: gradientAnimation 20s ease infinite;
+        background: transparent !important;
     }
     
-    @keyframes gradientAnimation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    /* خلفية متحركة بتقنية Cyber Grid (تتحرك للأمام) */
+    body {
+        background-color: #050b14;
+        background-image: 
+            linear-gradient(rgba(255, 123, 0, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 123, 0, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+        0% { background-position: 0 0; }
+        100% { background-position: 40px 40px; }
     }
     
-    /* القائمة الجانبية بتصميم تكتيكي */
+    /* القائمة الجانبية بتصميم تكتيكي معتم */
     section[data-testid="stSidebar"] {
-        background-color: #070d1a !important;
-        border-right: 1px solid rgba(255, 123, 0, 0.3);
+        background-color: rgba(7, 13, 26, 0.95) !important;
+        border-right: 1px solid rgba(255, 123, 0, 0.4);
     }
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
     
-    /* خانة البحث: خلفية كحلية، حدود برتقالية، والكتابة باللون الأبيض النقي */
+    /* خانة البحث: خلفية كحلي داكن، كتابة بيضاء ناصحة، وتوهج برتقالي */
     .stTextInput > div > div > input {
-        background-color: #0b132b !important;
+        background-color: rgba(11, 19, 43, 0.9) !important;
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
         border-radius: 12px;
         border: 2px solid #ff7b00;
         padding: 14px;
         font-size: 16px;
-        box-shadow: 0 0 10px rgba(255, 123, 0, 0.2);
+        box-shadow: 0 0 15px rgba(255, 123, 0, 0.3);
         transition: all 0.4s ease;
     }
     .stTextInput > div > div > input:focus {
-        border-color: #ff9f1c;
-        box-shadow: 0 0 20px rgba(255, 123, 0, 0.5);
+        border-color: #00ffff;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
     }
     
-    /* حركة ظهور العناصر بشكل تكتيكي ناعم */
+    /* حركة ظهور العناصر بشكل ناعم */
     @keyframes tacticalFade {
         from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
@@ -75,7 +82,7 @@ st.markdown("""
     }
     .streamlit-expanderHeader:hover {
         border-color: #ff7b00 !important;
-        box-shadow: 0 0 15px rgba(255, 123, 0, 0.3);
+        box-shadow: 0 0 15px rgba(255, 123, 0, 0.4);
         background: rgba(28, 37, 65, 0.95) !important;
     }
     
@@ -119,12 +126,12 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Designed & Developed by T.S.S\nDisaster & Crisis Management")
 
-# --- الواجهة الرئيسيةSAFETY 360 ---
+# --- الواجهة الرئيسية SAFETY 360 ---
 st.title("🌐 SAFETY 360 — منصة السلامة وإدارة الأزمات الذكية")
 st.markdown("##### 🛡️ محطة القيادة والتحكم لاستعراض التشريعات وتحليل المخاطر (أردن ودولي)")
 st.write("")
 
-# نافذة البحث الرئيسية (مع كتابة بيضاء صافية)
+# نافذة البحث الرئيسية (كتابة بيضاء ناصحة)
 user_query = st.text_input("🔍 رادار البحث الفوري (ابحث عن أي تشريع، خطر، صيف، طوارئ، كيميائي، حفريات):", placeholder="أدخل مصطلح البحث هنا (مثلاً: ارتفاع، حريق، طوارئ، LOTO)...")
 
 if user_query:
