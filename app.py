@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تصميم مخصص يثبت الأزرار لتكون شفافة وتتوهج بالبرتقالي عند مرور الماوس
+# تصميم مخصص يضمن وضوح النصوص والأزرار الزجاجية المتوهجة
 st.markdown("""
     <style>
     .stApp {
@@ -35,19 +35,30 @@ st.markdown("""
         font-size: 16px !important;
     }
     
-    /* جعل الأزرار شفافة تماماً مع حدود بيضاء، وعند مرور الماوس تصبح برتقالية فخمة */
-    div.stButton > button {
-        background-color: transparent !important;
+    /* تصميم الأزرار المخصصة الشفافة والتي تتغير للبرتقالي عند مرور الماوس */
+    .custom-btn {
+        display: block;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.6);
         color: #ffffff !important;
-        border: 2px solid rgba(255, 255, 255, 0.3) !important;
-        border-radius: 12px !important;
-        transition: all 0.3s ease-in-out !important;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 20px;
+        text-align: center;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        margin-bottom: 10px;
     }
-    div.stButton > button:hover {
-        background-color: rgba(255, 123, 0, 0.15) !important;
+    .custom-btn:hover {
+        background: #ff7b00 !important;
         border-color: #ff7b00 !important;
-        color: #ff7b00 !important;
-        box-shadow: 0 0 15px rgba(255, 123, 0, 0.4) !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 20px rgba(255, 123, 0, 0.6);
+        transform: translateY(-2px);
     }
     
     h1, h2, h3, h4, h5, h6, p, span, label {
@@ -113,19 +124,20 @@ if menu == "🏠 الرئيسية":
     
     q_main = st.text_input("🔍 بماذا تحتاج المساعدة؟ (اسأل عن قانون، خطر، مادة، إجراء طوارئ...)", placeholder="مثلاً: ما متطلبات العمل على ارتفاع؟ أو تسرب كيميائي...")
     
-    st.write("📌 **أمثلة مقترحة للبحث السريع:**")
+    st.write("📌 **أمثلة مقترحة للبحث السريع (انقر للاختيار):**")
     
+    # استخدام أزرار الـ HTML المتوهجة والمخصصة
     col_ex1, col_ex2, col_ex3 = st.columns(3)
     
     selected_quick_query = ""
     with col_ex1:
-        if st.button("🏗️ العمل على ارتفاع", key="b_high"):
+        if st.button("🏗️ العمل على ارتفاع", key="b_high", use_container_width=True):
             selected_quick_query = "ارتفاع"
     with col_ex2:
-        if st.button("🧪 تسرب مادة كيميائية", key="b_chem"):
+        if st.button("🧪 تسرب مادة كيميائية", key="b_chem", use_container_width=True):
             selected_quick_query = "كيميائي"
     with col_ex3:
-        if st.button("🔥 إجراءات الحرائق", key="b_fire"):
+        if st.button("🔥 إجراءات الحرائق", key="b_fire", use_container_width=True):
             selected_quick_query = "حريق"
 
     if selected_quick_query:
@@ -136,16 +148,16 @@ if menu == "🏠 الرئيسية":
     
     b1, b2, b3, b4 = st.columns(4)
     with b1:
-        if st.button("🚨 حالة طوارئ", key="cmd_emergency"):
+        if st.button("🚨 حالة طوارئ", key="cmd_emergency", use_container_width=True):
             st.warning("انتقل لقسم 'طوارئ فورية' من القائمة الجانبية.")
     with b2:
-        if st.button("🤖 Safety AI", key="cmd_ai"):
+        if st.button("🤖 Safety AI", key="cmd_ai", use_container_width=True):
             st.info("انتقل لقسم المساعد الذكي.")
     with b3:
-        if st.button("📋 أدوات المشرف", key="cmd_tools"):
+        if st.button("📋 أدوات المشرف", key="cmd_tools", use_container_width=True):
             st.info("انتقل لقسم أدوات المشرف.")
     with b4:
-        if st.button("⚖️ القوانين", key="cmd_laws"):
+        if st.button("⚖️ القوانين", key="cmd_laws", use_container_width=True):
             st.info("انتقل لقسم القوانين والأنظمة.")
 
     active_query = q_main if q_main else selected_quick_query
@@ -166,7 +178,7 @@ if menu == "🏠 الرئيسية":
 elif menu == "🤖 Safety AI (المساعد الذكي)":
     st.title("🤖 Safety AI — مساعد السلامة الذكي")
     ai_query = st.text_area("✍️ اكتب السيناريو أو المشكلة هنا:", placeholder="مثلاً: عندي عامل رح يشتغل على ارتفاع 6 متر...")
-    if st.button("🚀 تحليل سيناريو السلامة"):
+    if st.button("🚀 تحليل سيناريو السلامة", use_container_width=True):
         if ai_query:
             st.success("✨ تحليل مساعد السلامة الذكي:")
             st.markdown("⚠️ **المخاطر:** السقوط من ارتفاع، عدم تأمين حافة العمل.")
@@ -178,7 +190,7 @@ elif menu == "🚨 طوارئ فورية (Emergency)":
     st.title("🚨 مركز حالات الطوارئ الفورية")
     st.error("⚠️ اختر نوع حالة الطوارئ لعرض الخطوات الفورية:")
     em_type = st.selectbox("نوع الطارئ:", ["🔥 حريق", "🧪 تسرب كيميائي", "⚡ صعقة كهربائية"])
-    if st.button("🚨 اعرض الخطوات"):
+    if st.button("🚨 اعرض الخطوات", use_container_width=True):
         st.markdown(f"**خطوات الطوارئ لـ ({em_type}):**\n1. أطلق الإنذار فوراً.\n2. أبلغ الدفاع المدني.\n3. قم بالإخلاء الآمن.")
 
 elif menu == "⚖️ القوانين والأنظمة":
