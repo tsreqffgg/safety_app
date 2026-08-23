@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تصميم نظيف وآمن يمنع تداخل الألوان
+# تصميم مخصص يثبت الأزرار لتكون شفافة وتتوهج بالبرتقالي عند مرور الماوس
 st.markdown("""
     <style>
     .stApp {
@@ -23,6 +23,8 @@ st.markdown("""
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
+    
+    /* خانات البحث والنصوص */
     .stTextInput input, .stTextArea textarea {
         background-color: #0b132b !important;
         color: #ffffff !important;
@@ -32,6 +34,22 @@ st.markdown("""
         padding: 12px !important;
         font-size: 16px !important;
     }
+    
+    /* جعل الأزرار شفافة تماماً مع حدود بيضاء، وعند مرور الماوس تصبح برتقالية فخمة */
+    div.stButton > button {
+        background-color: transparent !important;
+        color: #ffffff !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 12px !important;
+        transition: all 0.3s ease-in-out !important;
+    }
+    div.stButton > button:hover {
+        background-color: rgba(255, 123, 0, 0.15) !important;
+        border-color: #ff7b00 !important;
+        color: #ff7b00 !important;
+        box-shadow: 0 0 15px rgba(255, 123, 0, 0.4) !important;
+    }
+    
     h1, h2, h3, h4, h5, h6, p, span, label {
         color: #f8fafc !important;
     }
@@ -97,7 +115,6 @@ if menu == "🏠 الرئيسية":
     
     st.write("📌 **أمثلة مقترحة للبحث السريع:**")
     
-    # استبدال الأزرار التقليدية بطريقة تضمن ظهور النصوص بوضوح تام على خلفية ملونة واضحة
     col_ex1, col_ex2, col_ex3 = st.columns(3)
     
     selected_quick_query = ""
@@ -131,7 +148,6 @@ if menu == "🏠 الرئيسية":
         if st.button("⚖️ القوانين", key="cmd_laws"):
             st.info("انتقل لقسم القوانين والأنظمة.")
 
-    # تنفيذ البحث
     active_query = q_main if q_main else selected_quick_query
     if active_query:
         st.write("---")
@@ -147,7 +163,6 @@ if menu == "🏠 الرئيسية":
             else:
                 st.warning("⚠️ لم يتم العثور على نتائج مطابقة.")
 
-# باقي الأقسام تبقى كما هي تماماً...
 elif menu == "🤖 Safety AI (المساعد الذكي)":
     st.title("🤖 Safety AI — مساعد السلامة الذكي")
     ai_query = st.text_area("✍️ اكتب السيناريو أو المشكلة هنا:", placeholder="مثلاً: عندي عامل رح يشتغل على ارتفاع 6 متر...")
