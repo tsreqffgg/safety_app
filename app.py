@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تخصيص التصميم البصري المتطور (Glassmorphism & Cyber-Dark)
+# تخصيص التصميم وإصلاح ألوان خانات الإدخال والنصوص لتكون واضحة
 st.markdown("""
     <style>
     .stApp {
@@ -23,19 +23,24 @@ st.markdown("""
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
-    .stTextInput > div > div > input, .stTextArea textarea {
-        background-color: rgba(15, 23, 42, 0.9) !important;
+    
+    /* إصلاح خلفية وكتابة خانات البحث والنصوص لتكون واضحة (خلفية كحلي غامق مع نص أبيض ناصع) */
+    .stTextInput input, .stTextArea textarea {
+        background-color: #0b132b !important;
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-        border-radius: 12px;
-        border: 2px solid #ff7b00;
-        padding: 12px;
-        font-size: 16px;
+        border-radius: 12px !important;
+        border: 2px solid #ff7b00 !important;
+        padding: 12px !important;
+        font-size: 16px !important;
     }
-    .stTextInput > div > div > input:focus {
-        border-color: #38bdf8;
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    .stTextInput input:focus, .stTextArea textarea:focus {
+        border-color: #38bdf8 !important;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
     }
+    
     .streamlit-expanderHeader {
         background: rgba(30, 41, 59, 0.8) !important;
         color: #ffffff !important;
@@ -113,7 +118,6 @@ if menu == "🏠 الرئيسية":
     st.markdown("##### مساعدك الذكي والمرجع المعتمد للسلامة والصحة المهنية وإدارة الأزمات (أردن ودولي)")
     st.write("")
     
-    # مربع البحث السريع في المنتصف
     q_main = st.text_input("🔍 بماذا تحتاج المساعدة؟ (اسأل عن قانون، خطر، مادة، إجراء طوارئ...)", placeholder="مثلاً: ما متطلبات العمل على ارتفاع؟ أو تسرب كيميائي...")
     
     st.write("📌 **أمثلة مقترحة للبحث:**")
@@ -145,7 +149,6 @@ if menu == "🏠 الرئيسية":
         if st.button("⚖️ القوانين الأردنية", use_container_width=True):
             st.info("انتقل لقسم القوانين والأنظمة لاستعراض المراجع.")
 
-    # إذا تم إدخال بحث في الرئيسية
     if q_main:
         st.write("---")
         st.subheader("⚡ نتائج البحث الفورية:")
