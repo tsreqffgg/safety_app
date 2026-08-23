@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تخصيص التصميم وإصلاح ألوان خانات الإدخال والنصوص لتكون واضحة
+# تخصيص التصميم مع إزالة أي تأثير مزعج عن الأزرار لتبقى واضحة تماماً
 st.markdown("""
     <style>
     .stApp {
@@ -24,7 +24,7 @@ st.markdown("""
         color: #ffffff !important;
     }
     
-    /* إصلاح خلفية وكتابة خانات البحث والنصوص لتكون واضحة (خلفية كحلي غامق مع نص أبيض ناصع) */
+    /* خانات البحث والنصوص */
     .stTextInput input, .stTextArea textarea {
         background-color: #0b132b !important;
         color: #ffffff !important;
