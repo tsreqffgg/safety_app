@@ -4,61 +4,70 @@ import pandas as pd
 # إعدادات الصفحة وتصميم الواجهة الواسع
 st.set_page_config(
     page_title="SAFETY 360 | قيادة السلامة وإدارة الأزمات", 
-    page_icon="🌐", 
+    page_icon="🛡️", 
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# تخصيص التصميم مع خلفية شبكية نيون متحركة حقيقية
+# تخصيص التصميم المتطور (Cyber-Glassmorphism مع توهجات نيون)
 st.markdown("""
     <style>
-    /* إخفاء خلفية Streamlit الأصلية وجعلها شفافة لإظهار الخلفية المتحركة */
+    /* إخفاء خلفية Streamlit الأصلية */
     .stApp {
         background: transparent !important;
     }
     
-    /* خلفية متحركة بتقنية Cyber Grid (تتحرك للأمام) */
+    /* خلفية شبكية نيون متحركة ببطء */
     body {
-        background-color: #050b14;
+        background-color: #030712;
         background-image: 
-            linear-gradient(rgba(255, 123, 0, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 123, 0, 0.05) 1px, transparent 1px);
-        background-size: 40px 40px;
-        animation: gridMove 20s linear infinite;
+            linear-gradient(rgba(255, 123, 0, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 123, 0, 0.04) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: gridMove 25s linear infinite;
     }
 
     @keyframes gridMove {
         0% { background-position: 0 0; }
-        100% { background-position: 40px 40px; }
+        100% { background-position: 50px 50px; }
     }
     
-    /* القائمة الجانبية بتصميم تكتيكي معتم */
+    /* القائمة الجانبية بتصميم تكتيكي معتم وزجاجي */
     section[data-testid="stSidebar"] {
-        background-color: rgba(7, 13, 26, 0.95) !important;
-        border-right: 1px solid rgba(255, 123, 0, 0.4);
+        background-color: rgba(6, 11, 22, 0.95) !important;
+        border-right: 1px solid rgba(255, 123, 0, 0.3);
     }
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
     
-    /* خانة البحث: خلفية كحلي داكن، كتابة بيضاء ناصحة، وتوهج برتقالي */
+    /* خانة البحث: خلفية كحلي داكن، كتابة بيضاء ناصحة، وتوهج برتقالي سايبر */
     .stTextInput > div > div > input {
-        background-color: rgba(11, 19, 43, 0.9) !important;
+        background-color: rgba(11, 19, 43, 0.95) !important;
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-        border-radius: 12px;
+        border-radius: 14px;
         border: 2px solid #ff7b00;
-        padding: 14px;
+        padding: 16px;
         font-size: 16px;
-        box-shadow: 0 0 15px rgba(255, 123, 0, 0.3);
+        box-shadow: 0 0 20px rgba(255, 123, 0, 0.25);
         transition: all 0.4s ease;
     }
     .stTextInput > div > div > input:focus {
         border-color: #00ffff;
-        box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
     }
     
-    /* حركة ظهور العناصر بشكل ناعم */
+    /* تنسيق العنوان الرئيسي بنبض تكتيكي */
+    .main-title {
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: #ffffff;
+        text-shadow: 0 0 20px rgba(255, 123, 0, 0.5);
+        margin-bottom: 0px;
+    }
+    
+    /* حركة ظهور العناصر بشكل ناعم وسلس */
     @keyframes tacticalFade {
         from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
@@ -67,23 +76,23 @@ st.markdown("""
         animation: tacticalFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
-    /* تنسيق النصوص والعناوين */
-    h1, h2, h3, h4, h5, h6, p, span, label {
-        color: #e2e8f0 !important;
-    }
-    
     /* صندوق النتائج بتصميم زجاجي عالي التقنية */
     .streamlit-expanderHeader {
-        background: rgba(17, 29, 50, 0.85) !important;
+        background: rgba(15, 23, 42, 0.85) !important;
         color: #ffffff !important;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 123, 0, 0.4) !important;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 123, 0, 0.35) !important;
         transition: all 0.3s ease;
     }
     .streamlit-expanderHeader:hover {
-        border-color: #ff7b00 !important;
-        box-shadow: 0 0 15px rgba(255, 123, 0, 0.4);
-        background: rgba(28, 37, 65, 0.95) !important;
+        border-color: #00ffff !important;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        background: rgba(22, 33, 62, 0.95) !important;
+    }
+    
+    /* تنسيق النصوص العامة */
+    p, span, label, h3, h4, h5 {
+        color: #e2e8f0 !important;
     }
     
     /* تنبيهات النظام */
@@ -91,7 +100,7 @@ st.markdown("""
         background: rgba(11, 19, 43, 0.9) !important;
         color: #ffffff !important;
         border: 1px solid #ff7b00 !important;
-        border-radius: 10px;
+        border-radius: 12px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -115,23 +124,23 @@ with st.sidebar:
     st.image("logo.png", use_container_width=True)
     st.markdown("---")
     st.markdown("### 🌐 نظام القيادة 360")
-    st.info("💡 **عن المنصة:**\nنظرة شاملة ومحطة استعلام فورية للتشريعات الأردنية ومعايير السلامة الدولية (OSHA, ISO, NFPA).")
+    st.info("💡 **عن المنصة:**\nمحطة القيادة الذكية للتشريعات الأردنية ومعايير السلامة الدولية (OSHA, ISO, NFPA).")
     
     if not df.empty:
-        st.success(f"🟢 الخادم الأمني: متصل بنجاح")
-        st.metric(label="إجمالي المعايير والتشريعات", value=len(df))
+        st.success(f"🟢 الخادم الأمني: متصل")
+        st.metric(label="📊 إجمالي المعايير", value=len(df))
     else:
         st.error("🔴 الخادم: جاري إعادة الاتصال...")
         
     st.markdown("---")
     st.caption("Designed & Developed by T.S.S\nDisaster & Crisis Management")
 
-# --- الواجهة الرئيسية SAFETY 360 ---
-st.title("🌐 SAFETY 360 — منصة السلامة وإدارة الأزمات الذكية")
-st.markdown("##### 🛡️ محطة القيادة والتحكم لاستعراض التشريعات وتحليل المخاطر (أردن ودولي)")
+# --- الواجهة الرئيسية بتصميم SAFETY 360 المطور ---
+st.markdown('<p class="main-title">🌐 SAFETY 360 — منصة السلامة وإدارة الأزمات الذكية</p>', unsafe_allow_html=True)
+st.markdown("##### 🛡️ محطة القيادة والتحكم التكتيكية لاستعراض التشريعات وتحليل المخاطر (أردن ودولي)")
 st.write("")
 
-# نافذة البحث الرئيسية (كتابة بيضاء ناصحة)
+# نافذة البحث الرئيسية (كتابة بيضاء ناصحة وتوهج سيبراني)
 user_query = st.text_input("🔍 رادار البحث الفوري (ابحث عن أي تشريع، خطر، صيف، طوارئ، كيميائي، حفريات):", placeholder="أدخل مصطلح البحث هنا (مثلاً: ارتفاع، حريق، طوارئ، LOTO)...")
 
 if user_query:
