@@ -3,7 +3,7 @@ import pandas as pd
 
 # إعدادات الصفحة وتصميم الواجهة الواسع
 st.set_page_config(
-    page_title="منصة خبراء السلامة الذكية | TSS", 
+    page_title="SAFETY 360 | TSS", 
     page_icon="🛡️", 
     layout="wide",
     initial_sidebar_state="expanded"
