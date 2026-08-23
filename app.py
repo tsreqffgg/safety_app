@@ -3,81 +3,76 @@ import pandas as pd
 
 # إعدادات الصفحة وتصميم الواجهة الواسع
 st.set_page_config(
-    page_title="منصة خبراء السلامة الذكية | TSS", 
-    page_icon="🛡️", 
+    page_title="SAFETY 360 | قيادة السلامة وإدارة الأزمات", 
+    page_icon="🌐", 
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# تخصيص تصميم CSS متطور جداً مع حركات وتأثيرات بصرية فخمة
+# تخصيص تصميم بصري تكتيكي متطور جداً (Cyber-Glassmorphism)
 st.markdown("""
     <style>
-    /* خلفية النظام الكحلية العميقة المتدرجة */
+    /* خلفية الفضاء السيبراني العميق مع تدرجات رادارية */
     .stApp {
-        background: linear-gradient(135deg, #050b14 0%, #0b132b 50%, #1c2541 100%) !important;
+        background: radial-gradient(circle at 50% 10%, #0d1b2a 0%, #050b14 70%, #020408 100%) !important;
     }
     
-    /* القائمة الجانبية بتصميم تكنولوجي فخم */
+    /* القائمة الجانبية بنمط لوحة التحكم العسكرية */
     section[data-testid="stSidebar"] {
-        background-color: #080f1d !important;
-        border-right: 1px solid rgba(255, 123, 0, 0.2);
+        background-color: #070d1a !important;
+        border-right: 1px solid rgba(255, 123, 0, 0.3);
     }
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
     
-    /* تأثير نبض وتوهج للشعار أو العناوين */
-    @keyframes pulseGlow {
-        0% { box-shadow: 0 0 5px rgba(255, 123, 0, 0.2); }
-        50% { box-shadow: 0 0 20px rgba(255, 123, 0, 0.6); }
-        100% { box-shadow: 0 0 5px rgba(255, 123, 0, 0.2); }
-    }
-    
-    /* تنسيق خانة البحث مع حركات عند التفاعل */
+    /* تأثير التوهج البرتقالي السيبراني (Neon Pulse) */
     .stTextInput > div > div > input {
         background-color: #0b132b !important;
-        color: #ffffff !important;
+        color: #00ffff !important;
         border-radius: 12px;
         border: 2px solid #ff7b00;
-        padding: 12px;
+        padding: 14px;
         font-size: 16px;
-        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(255, 123, 0, 0.2);
+        transition: all 0.4s ease;
     }
     .stTextInput > div > div > input:focus {
-        border-color: #ff9f1c;
-        box-shadow: 0 0 15px rgba(255, 123, 0, 0.5);
+        border-color: #00ffff;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
     }
     
-    /* حركة ظهور سلسة للعناصر (Fade In) */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
+    /* حركة ظهور العناصر بشكل تكتيكي ناعم */
+    @keyframes tacticalFade {
+        from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
     }
     .element-container, .stExpander {
-        animation: fadeIn 0.5s ease-out forwards;
+        animation: tacticalFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
-    /* تنسيق العناوين والخطوط */
+    /* تنسيق النصوص والعناوين بإضاءة خفيفة */
     h1, h2, h3, h4, h5, h6, p, span, label {
-        color: #ffffff !important;
+        color: #e2e8f0 !important;
     }
     
-    /* تنسيق صناديق النتائج (Expanders) بمظهر زجاجي عصري */
+    /* صندوق النتائج بتصميم زجاجي عالي التقنية */
     .streamlit-expanderHeader {
-        background-color: #111d32 !important;
+        background: rgba(17, 29, 50, 0.8) !important;
         color: #ffffff !important;
         border-radius: 10px;
         border: 1px solid rgba(255, 123, 0, 0.4) !important;
         transition: all 0.3s ease;
     }
     .streamlit-expanderHeader:hover {
-        border-color: #ff7b00 !important;
-        background-color: #1c2541 !important;
+        border-color: #00ffff !important;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        background: rgba(28, 37, 65, 0.9) !important;
     }
     
-    /* تخصيص التحذيرات والتنبيهات */
+    /* تنبيهات النظام الأمني */
     div.stAlert {
-        background-color: #111d32 !important;
+        background: rgba(11, 19, 43, 0.9) !important;
         color: #ffffff !important;
         border: 1px solid #ff7b00 !important;
         border-radius: 10px;
@@ -99,37 +94,37 @@ def load_data():
 
 df = load_data()
 
-# --- القائمة الجانبية مع شعارك الرسمي TSS ---
+# --- القائمة الجانبية المحدثة مع شعار TSS وتسمية SAFETY 360 ---
 with st.sidebar:
     st.image("logo.png", use_container_width=True)
     st.markdown("---")
-    st.markdown("### ⚡ لوحة العمليات")
-    st.info("💡 **عن المنصة:**\nنظام القيادة والتحكم الذكي للتشريعات الأردنية ومعايير السلامة الدولية (OSHA, ISO, NFPA).")
+    st.markdown("### 🌐 نظام القيادة 360")
+    st.info("💡 **عن المنصة:**\nنظرة شاملة ومحطة استعلام فورية للتشريعات الأردنية ومعايير السلامة الدولية (OSHA, ISO, NFPA).")
     
     if not df.empty:
-        st.success(f"🟢 حالة النظام: متصل بالخادم الأمني")
-        st.metric(label="إجمالي التشريعات المتاحة", value=len(df))
+        st.success(f"🟢 الخادم الأمني: متصل بنجاح")
+        st.metric(label="إجمالي المعايير والتشريعات", value=len(df))
     else:
-        st.error("🔴 تنبيه: جاري إعادة الاتصال...")
+        st.error("🔴 الخادم: جاري إعادة الاتصال...")
         
     st.markdown("---")
-    st.caption("Developed by T.S.S | Disaster & Crisis Management")
+    st.caption("Designed & Developed by T.S.S\nDisaster & Crisis Management")
 
-# --- الواجهة الرئيسية بتصميم تفاعلي ---
-st.title("🛡️ منصة خبراء السلامة والصحة المهنية الذكية")
-st.markdown("##### 🌐 نظام البحث الفوري والتحليل التكتيكي للسلامة وإدارة الأزمات (أردن ودولي)")
+# --- الواجهة الرئيسية بتصميم SAFETY 360 ---
+st.title("🌐 SAFETY 360 — منصة السلامة وإدارة الأزمات الذكية")
+st.markdown("##### 🛡️ محطة القيادة والتحكم لاستعراض التشريعات وتحليل المخاطر (أردن ودولي)")
 st.write("")
 
-# نافذة البحث الرئيسية بتصميم تكنولوجي متطور
-user_query = st.text_input("🔍 ابحث عن أي تشريع، خطر، صيف، طوارئ، حفريات، كيميائي، أو إجراء سلامة:", placeholder="أدخل كلمة المفتاح للبحث السريع (مثلاً: ارتفاع، حريق، طوارئ)...")
+# نافذة البحث الرئيسية
+user_query = st.text_input("🔍 رادار البحث الفوري (ابحث عن أي تشريع، خطر، صيف، طوارئ، كيميائي، حفريات):", placeholder="أدخل مصطلح البحث هنا (مثلاً: ارتفاع، حريق، طوارئ، LOTO)...")
 
 if user_query:
-    with st.spinner("⚡ جارٍ معالجة البيانات واستخراج النتائج التكتيكية..."):
+    with st.spinner("⚡ جاري مسح قاعدة البيانات واستخراج النتائج التكتيكية..."):
         if not df.empty:
             results = df[df.astype(str).apply(lambda x: x.str.contains(user_query, case=False, na=False)).any(axis=1)]
             
             if not results.empty:
-                st.success(f"🎯 تم رصد ({len(results)}) تطابق مباشر في قاعدة المعرفة:")
+                st.success(f"🎯 تم رصد ({len(results)}) مطابقة دقيقة في منظومة SAFETY 360:")
                 st.write("")
                 
                 for index, row in results.iterrows():
@@ -153,8 +148,8 @@ if user_query:
                         st.markdown(f"**📋 المتطلب القانوني:**\n> {requirement}")
                         st.markdown(f"**🛠️ التطبيق العملي لمشرف السلامة:**\n> {app}")
             else:
-                st.warning("⚠️ لم يتم العثور على نتائج مطابقة، جرب استخدام كلمات مفتاحية أخرى (مثل: صيف، طوارئ، ارتفاع، حريق).")
+                st.warning("⚠️ لم يتم رصد نتائج مطابقة، جرب كلمات بحث أخرى (مثل: صيف، طوارئ، حريق، ارتفاع).")
         else:
             st.error("⚠️ خطأ في الاتصال بقاعدة البيانات، يرجى مراجعة الرابط.")
 else:
-    st.info("👈 نظام الاستعلام جاهز. ابدأ بكتابة أي مصطلح هندسي أو أمني في حقل البحث بالأعلى لاستعراض النتائج فوراً.")
+    st.info("👈 نظام SAFETY 360 في وضع الاستعداد. أدخل أي مصطلح بحثي في الأعلى لاستعراض البيانات وتحليلها فوراً.")
