@@ -9,7 +9,7 @@ st.write("مساعدك القانوني والفني المعتمد للسلام
 
 # رابط جدول البيانات (Google Sheets) المؤقت أو الافتراضي
 # سنقوم لاحقاً بربطه بالجدول الذي أنشأته
-sheet_url = "https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit" # رابط تجريبي
+sheet_url = "https://docs.google.com/spreadsheets/d/1l6f8u-xkX9i89sTw9qfPkYO67WJ1Ym-XQCWLFpHICys/edit?usp=sharing" # رابط تجريبي
 
 @st.cache_data
 def load_data():
