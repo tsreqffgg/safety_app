@@ -11,69 +11,96 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# تصميم واجهة الـ Glassmorphism والتفاعل المتوهج العصري
+# تصميم واجهة الـ Command Center المتقدم والـ Glassmorphism العصري
 st.markdown("""
     <style>
+        /* الخلفية العامة */
         .stApp {
-            background: linear-gradient(135deg, #020617 0%, #090d16 50%, #0f172a 100%) !important;
+            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #020617 100%) !important;
         }
+        
+        /* تخصيص القائمة الجانبية لتشبه منصات القيادة */
         section[data-testid="stSidebar"] {
-            background-color: rgba(11, 18, 33, 0.98) !important;
-            border-right: 1px solid rgba(255, 123, 0, 0.3);
+            background: linear-gradient(180deg, #090d16 0%, #020617 100%) !important;
+            border-right: 1px solid rgba(255, 123, 0, 0.2);
         }
         section[data-testid="stSidebar"] * {
-            color: #ffffff !important;
+            color: #f1f5f9 !important;
         }
+        
+        /* إخفاء عناصر الراديو الافتراضية وجعلها تبدو كأزرار تحكم متطورة */
+        .stRadio > label {
+            font-weight: 700;
+            color: #ff7b00 !important;
+            margin-bottom: 10px;
+        }
+        
+        /* حقول الإدخال والنصوص */
         .stTextInput input, .stTextArea textarea, .stSelectbox select {
-            background-color: #0b132b !important;
+            background-color: rgba(15, 23, 42, 0.8) !important;
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             border-radius: 12px !important;
-            border: 2px solid #ff7b00 !important;
+            border: 1px solid rgba(255, 123, 0, 0.4) !important;
             padding: 12px !important;
-            font-size: 16px !important;
+            font-size: 15px !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
+        .stTextInput input:focus, .stTextArea textarea:focus {
+            border-color: #ff7b00 !important;
+            box-shadow: 0 0 15px rgba(255, 123, 0, 0.3) !important;
+        }
+
         h1, h2, h3, h4, h5, h6, p, span, label {
             color: #f8fafc !important;
         }
+
+        /* تنبيهات النظام الاحترافية */
         div.stAlert {
-            background: rgba(15, 23, 42, 0.9) !important;
+            background: rgba(15, 23, 42, 0.95) !important;
             color: #ffffff !important;
-            border: 1px solid #ff7b00 !important;
-            border-radius: 10px;
+            border: 1px solid rgba(255, 123, 0, 0.5) !important;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
-        /* تصميم بطاقات الأزرار العصرية */
-        .card-container {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 123, 0, 0.2);
-            padding: 20px;
-            border-radius: 16px;
+
+        /* تصميم بطاقات الأوامر السريعة في الواجهة الرئيسية */
+        .command-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.7) 100%);
+            border: 1px solid rgba(255, 123, 0, 0.25);
+            padding: 22px;
+            border-radius: 18px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
+            backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .card-container:hover {
+        .command-card:hover {
             border-color: #ff7b00;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px -5px rgba(255, 123, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px -5px rgba(255, 123, 0, 0.3);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
         }
-        /* تعديل تصميم أزرار ستريمليت لتتطابق مع التصميم */
+
+        /* أزرار Streamlit المخصصة */
         .stButton button {
             width: 100%;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: #f8fafc !important;
-            border: 1px solid rgba(255, 123, 0, 0.4);
+            border: 1px solid rgba(255, 123, 0, 0.3);
             border-radius: 12px;
             padding: 12px 20px;
             font-weight: 600;
+            letter-spacing: 0.5px;
             transition: all 0.3s ease;
         }
         .stButton button:hover {
-            background: linear-gradient(135deg, #ff7b00 0%, #e06d00 100%);
+            background: linear-gradient(135deg, #ff7b00 0%, #ea580c 100%);
             border-color: #ff7b00;
             color: #ffffff !important;
-            box-shadow: 0 4px 15px rgba(255, 123, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 123, 0, 0.4);
+            transform: scale(1.02);
         }
     </style>
 """, unsafe_allow_html=True)
@@ -92,19 +119,20 @@ def load_data():
 df = load_data()
 current_date_str = datetime.now().strftime("%Y-%m-%d")
 
-# --- القائمة الجانبية المحدثة ---
+# --- القائمة الجانبية المحدثة بأسلوب منصات التحكم الذكية ---
 with st.sidebar:
-    if os.path.exists("logo.png"):
-        st.image("logo.png", use_container_width=True)
-    else:
-        st.markdown("### 🛡️ SAFETY 360")
-        st.caption("AI-Powered Safety Intelligence")
-        
-    st.markdown("---")
-    st.markdown("### 🧭 المنظومة الذكية")
+    st.markdown("""
+        <div style="text-align: center; padding: 10px 0;">
+            <h2 style="margin: 0; color: #ff7b00; font-weight: 900; font-size: 26px;">🛡️ SAFETY 360</h2>
+            <p style="font-size: 11px; color: #94a3b8; letter-spacing: 1px; margin-top: 5px;">COMMAND & INTELLIGENCE CENTER</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("<hr style='border-color: rgba(255,123,0,0.2); margin: 15px 0;'>", unsafe_allow_html=True)
+    st.markdown("### 🧭 مسارات المنظومة")
     
     menu = st.radio(
-        "اختر المسار:",
+        "اختر المسار التشغيلي:",
         [
             "🏠 الرئيسية (ماذا تريد أن تفعل؟)",
             "🧠 Safety Copilot (المساعد الذكي المتكامل)",
@@ -114,69 +142,103 @@ with st.sidebar:
             "🛂 Safety Passport (جواز السلامة للعامل)",
             "🖨️ QR Codes & Assets (الأصول والمعدات)",
             "📊 Incident Intelligence & Dashboard"
-        ]
+        ],
+        label_visibility="collapsed"
     )
     
-    st.markdown("---")
+    st.markdown("<hr style='border-color: rgba(255,123,0,0.2); margin: 20px 0;'>", unsafe_allow_html=True)
+    
+    # مؤشرات الحالة في الشريط الجانبي
     if not df.empty:
-        st.success("🟢 المنظومة: متصلة وفعالة")
-        st.metric(label="📊 المعايير المعتمدة", value=len(df))
+        st.markdown("🟢 **حالة الخادم:** متصل وآمن")
+        st.markdown(f"📊 **المعايير المعتمدة:** `{len(df)}` قاعدة بيانات")
     else:
-        st.error("🔴 الخادم: غير متصل")
+        st.markdown("🔴 **حالة الخادم:** وضع غير متصل (Offline Mode)")
         
-    st.markdown("---")
-    st.caption("Developed by T.S.S\nDisaster & Crisis Management")
+    st.markdown("<hr style='border-color: rgba(255,123,0,0.2); margin: 20px 0;'>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style="text-align: center; font-size: 12px; color: #64748b;">
+            <b>Disaster & Crisis Management</b><br>
+            Engineered by T.S.S © 2026
+        </div>
+    """, unsafe_allow_html=True)
 
 
 # ==========================================
 # 1. 🏠 الرئيسية (ماذا تريد أن تفعل؟)
 # ==========================================
 if menu == "🏠 الرئيسية (ماذا تريد أن تفعل؟)":
-    # Hero Header Section
+    # Header بصري جذاب ومستقبلي
     st.markdown("""
-        <div style="padding: 30px 20px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%); border-radius: 20px; border: 1px solid rgba(255, 123, 0, 0.3); margin-bottom: 30px; text-align: center;">
-            <span style="background-color: rgba(255, 123, 0, 0.15); color: #ff7b00; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 700; border: 1px solid rgba(255, 123, 0, 0.3);">🚀 الجيل القادم من أنظمة السلامة</span>
-            <h1 style="margin-top: 15px; font-size: 38px; font-weight: 900; color: #ffffff;">SAFETY 360 — AI-Powered Intelligence</h1>
-            <p style="color: #94a3b8; font-size: 16px; max-width: 700px; margin: 10px auto 0 auto;">منظومة القيادة والتحكم الذكية للسلامة والصحة المهنية وإدارة الأزمات والمخاطر الميدانية.</p>
+        <div style="padding: 35px 25px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.9) 100%); border-radius: 20px; border: 1px solid rgba(255, 123, 0, 0.35); margin-bottom: 35px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+            <span style="background: rgba(255, 123, 0, 0.15); color: #ff7b00; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; border: 1px solid rgba(255, 123, 0, 0.4);">⚡ نظام القيادة والتحقّم السيبراني والميداني</span>
+            <h1 style="margin-top: 15px; font-size: 40px; font-weight: 900; background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SAFETY 360 INTELLIGENCE</h1>
+            <p style="color: #94a3b8; font-size: 16px; max-width: 750px; margin: 12px auto 0 auto; line-height: 1.6;">منصة ذكية متكاملة لإدارة السلامة والصحة المهنية، تقييم المخاطر الميدانية، واستجابة الطوارئ الفورية المدعومة بالذكاء الاصطناعي.</p>
         </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("### 🎯 ماذا تريد أن تفعل اليوم؟")
-    st.write("اختر المسار السريع للبدء الفوري:")
+    st.markdown("### 🎯 لوحة التحكم السريعة (اختر الهدف التشغيلي):")
+    st.write("")
     
     col1, col2, col3 = st.columns(3)
     
     intent = ""
     with col1:
-        if st.button("🔴 عندي حالة طوارئ فوريّة", use_container_width=True):
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("🚨 حالة طوارئ فوريّة", use_container_width=True):
             intent = "emergency"
-        if st.button("⚖️ أريد معرفة المتطلب القانوني", use_container_width=True):
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("⚖️ الاستعلام عن متطلب قانوني", use_container_width=True):
             intent = "law"
-        if st.button("🤖 أريد أن أسأل Safety Copilot", use_container_width=True):
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("🤖 سؤال Safety Copilot", use_container_width=True):
             intent = "copilot"
+        st.markdown('</div>', unsafe_allow_html=True)
+        
     with col2:
-        if st.button("⚠️ أريد تقييم خطر (Risk Assessment)", use_container_width=True):
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("⚠️ تقييم المخاطر (Risk Assessment)", use_container_width=True):
             intent = "risk"
-        if st.button("🧪 أريد معلومات عن مادة كيميائية", use_container_width=True):
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("🧪 بيانات مادة كيميائية (SDS)", use_container_width=True):
             intent = "material"
-        if st.button("🛂 فحص جواز السفر (Safety Passport)", use_container_width=True):
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("🛂 فحص جواز السلامة (Passport)", use_container_width=True):
             intent = "passport"
+        st.markdown('</div>', unsafe_allow_html=True)
+        
     with col3:
-        if st.button("📋 أريد إنشاء نموذج (JSA & Workflow)", use_container_width=True):
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("📋 إنشاء نموذج JSA & Workflow", use_container_width=True):
             intent = "workflow"
-        if st.button("📸 أريد تحليل صورة خطر (AI Vision)", use_container_width=True):
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("📸 تحليل صورة خطر (AI Vision)", use_container_width=True):
             intent = "vision"
-        if st.button("🏢 الانتقال لـ Company Mode", use_container_width=True):
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="command-card">', unsafe_allow_html=True)
+        if st.button("🏢 فتح Company Mode", use_container_width=True):
             intent = "company"
+        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("---")
     
     # توجيه المستخدم حسب اختياره السريع
     if intent == "emergency":
-        st.error("🚨 الانتقال السريع للطوارئ:")
-        st.markdown("1. أطلق صفارة الإنذار فوراً.\n2. اتصل بالدفاع المدني (911).\n3. توجه لنقطة التجمع الآمنة.")
+        st.error("🚨 بروتوكول الطوارئ السريع:")
+        st.markdown("1. أطلق صفارة الإنذار وتفعيل نظام الإنذار المبكر.\n2. الاتصال الفوري بغرفة العمليات والدفاع المدني (911).\n3. إخلاء الموقع فوراً التوجه لنقطة التجمع الآمنة المعتمدة.")
     elif intent == "law" or intent == "":
-        q_search = st.text_input("🔍 بحث فوري في التشريعات والمعايير:", placeholder="مثلاً: أعمال البناء، السقالات، تسرب غاز...")
+        q_search = st.text_input("🔍 بحث فوري في التشريعات والمعايير:", placeholder="مثلاً: أعمال البناء، السقالات، تسرب غاز، مواد خطرة...")
         if q_search and not df.empty:
             results = df[df.astype(str).apply(lambda x: x.str.contains(q_search, case=False, na=False)).any(axis=1)]
             if not results.empty:
@@ -186,7 +248,7 @@ if menu == "🏠 الرئيسية (ماذا تريد أن تفعل؟)":
                         st.markdown(f"**📅 آخر تحقق:** `{current_date_str}`")
                         st.markdown(f"**📋 المتطلب:**\n> {row.get('Requirement','')}")
             else:
-                st.warning("⚠️ لم يتم العثور على نتائج.")
+                st.warning("⚠️ لم يتم العثور على نتائج مطابقة في قاعدة البيانات.")
     elif intent == "copilot":
         st.info("💡 يرجى الانتقال من القائمة الجانبية إلى (Safety Copilot) لتجربة المساعد الذكي التفاعلي المتكامل.")
     elif intent == "risk":
@@ -202,7 +264,7 @@ elif menu == "🧠 Safety Copilot (المساعد الذكي المتكامل)":
     st.title("🧠 Safety Copilot — المساعد الذكي التحليلي")
     st.markdown("المساعد لا يجيب فقط، بل يفهم المهمة، يحلل المخاطر التفاعلية، ويستخرج الإجراءات والمصادر.")
     
-    user_task = st.text_input("✍️ ما هي المهمة التي تود تنفيذها؟", placeholder="مثلاً: بدي أعمل أعمال لحام في موقع إنشائي...")
+    user_task = st.text_input("✍️ ما هي المهمة التي تود تنفيذها؟", placeholder="مثلاً: تنفيذ أعمال لحام وقطع في موقع إنشائي مرتفع...")
     
     if user_task:
         st.markdown("### 💬 تفاعل Safety Copilot التلقائي معك:")
