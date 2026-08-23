@@ -3,29 +3,43 @@ import pandas as pd
 
 # إعدادات الصفحة وتصميم الواجهة الواسع
 st.set_page_config(
-    page_title="منصة خبراء السلامة الذكية", 
+    page_title="منصة خبراء السلامة الذكية | TSS", 
     page_icon="🛡️", 
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# تخصيص التصميم عبر CSS لإعطاء مظهر عصري واحترافي
+# تخصيص التصميم بالهوية البصرية (الكحلي والبرتقالي)
 st.markdown("""
     <style>
+    /* لون الخلفية العامة وشريط القائمة الجانبية */
     .main {
-        background-color: #f8f9fa;
+        background-color: #f4f6f9;
     }
+    section[data-testid="stSidebar"] {
+        background-color: #0d1b2a;
+    }
+    section[data-testid="stSidebar"] * {
+        color: #ffffff !important;
+    }
+    
+    /* تنسيق خانة البحث بحدود برتقالية جذابة */
     .stTextInput > div > div > input {
         border-radius: 10px;
-        border: 2px solid #0e6655;
+        border: 2px solid #ff7b00;
         padding: 10px;
     }
-    .metric-card {
+    
+    /* تنسيق العناوين الرئيسية باللون الكحلي العميق */
+    h1, h2, h3 {
+        color: #1b263b;
+    }
+    
+    /* تنسيق مربعات النتائج (Expanders) */
+    .streamlit-expanderHeader {
         background-color: #ffffff;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        text-align: center;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -44,11 +58,11 @@ def load_data():
 
 df = load_data()
 
-# --- القائمة الجانبية المحدثة (Sidebar) ---
+# --- القائمة الجانبية مع شعارك الرسمي TSS ---
 with st.sidebar:
-    st.image("https://img.icons8.com/color/96/experimental-shield-secured-flat.png", width=80)
+    st.image("logo.png", use_container_width=True)
+    st.markdown("---")
     st.title("لوحة التحكم")
-    st.write("---")
     st.info("💡 **عن المنصة:**\nمساعدك المعتمد للبحث الفوري في التشريعات الأردنية ومعايير السلامة الدولية (OSHA, ISO, NFPA).")
     
     if not df.empty:
@@ -57,7 +71,7 @@ with st.sidebar:
     else:
         st.error("🔴 تنبيه: قاعدة البيانات غير متصلة")
         
-    st.write("---")
+    st.markdown("---")
     st.caption("تم تطوير المنصة خصيصاً لخبراء ومشرفي السلامة والصحة المهنية وإدارة الأزمات.")
 
 # --- الواجهة الرئيسية ---
@@ -65,17 +79,16 @@ st.title("🛡️ منصة خبراء السلامة والصحة المهنية
 st.markdown("##### مرجعك الفوري والقانوني المعتمد للسلامة المهنية وإدارة الأزمات (أردن ودولي)")
 st.write("")
 
-# نافذة البحث الرئيسية بتصميم بارز
+# نافذة البحث الرئيسية
 user_query = st.text_input("🔍 ابحث عن أي تشريع، خطر، صيف، طوارئ، حفريات، كيميائي، أو إجراء سلامة:", placeholder="اكتب كلمة البحث هنا (مثلاً: ارتفاع، حريق، LOTO)...")
 
 if user_query:
     with st.spinner("⏳ جارٍ البحث في قاعدة المعرفة المعتمدة..."):
         if not df.empty:
-            # بحث مرن داخل كافة الأعمدة
             results = df[df.astype(str).apply(lambda x: x.str.contains(user_query, case=False, na=False)).any(axis=1)]
             
             if not results.empty:
-                st.success(f"✨ تم العثور على ({len.results if 'len.results' else len(results)}) نتيجة مطابقة لبحثك:")
+                st.success(f"✨ تم العثور على ({len(results)}) نتيجة مطابقة لبحثك:")
                 st.write("")
                 
                 for index, row in results.iterrows():
@@ -87,7 +100,6 @@ if user_query:
                     requirement = row.get('Requirement', '')
                     app = row.get('Practical Application', '')
                     
-                    # عرض كل نتيجة داخل صندوق أنيق ومميز
                     with st.expander(f"📌 [{cat}] - {title} ({country})"):
                         col1, col2 = st.columns(2)
                         with col1:
@@ -104,21 +116,4 @@ if user_query:
         else:
             st.error("⚠️ تعذر قراءة جدول البيانات، يرجى التأكد من أن الرابط عام وقابل للقراءة.")
 else:
-    # شاشة ترحيبية عند عدم وجود بحث
     st.info("👈 ابدأ بكتابة كلمة مفتاحية في خانة البحث بالأعلى لعرض المعايير والتشريعات المطلوبة فوراً.")
-    
-    # عرض أقسام سريعة مقترحة
-    st.write("### ⚡ مواضيع شائعة يمكنك البحث عنها:")
-    cols = st.columns(4)
-    with cols[0]:
-        if st.button("🔥 السلامة من الحريق"):
-            pass
-    with cols[1]:
-        if st.button("☀️ الإجهاد الحراري وصيفاً"):
-            pass
-    with cols[2]:
-        if st.button("🚨 الطوارئ والأزمات"):
-            pass
-    with cols[3]:
-        if st.button("🏗️ الإنشاءات والحفريات"):
-            pass
